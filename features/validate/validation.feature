@@ -26,10 +26,17 @@ Feature: Validation
           }
         }
       """
-      When I successfully run `bundle exec rake pacto:validate['http://localhost:8000','tmp/aruba/contracts/simple_contract.json']`
+      When I successfully run `bundle exec rake pacto:validate['http://localhost:8000 http://localtest.me:8000','tmp/aruba/contracts/simple_contract.json']`
       Then the stdout should contain:
         """"
         Validating contracts in directory tmp/aruba/contracts/simple_contract.json against host http://localhost:8000
+
+        simple_contract.json: OK!
+        1 valid contract
+        """
+      And the stdout should contain:
+        """"
+        Validating contracts in directory tmp/aruba/contracts/simple_contract.json against host http://localtest.me:8000
 
         simple_contract.json: OK!
         1 valid contract

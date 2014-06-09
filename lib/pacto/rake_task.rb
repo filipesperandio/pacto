@@ -21,12 +21,15 @@ module Pacto
 
     def validate_task
       desc 'Validates all contracts in a given directory against a given host'
-      task :validate, :host, :dir do |_t, args|
+      task :validate, :hosts, :dir do |_t, args|
         if args.to_a.size < 2
           fail Pacto::UI.yellow('USAGE: rake pacto:validate[<host>, <contract_dir>]')
         end
 
-        validate_contracts(args[:host], args[:dir])
+        hosts = args[:hosts].split ' '
+        hosts.each do |host|
+          validate_contracts(host, args[:dir])
+        end
       end
     end
 
@@ -59,7 +62,7 @@ module Pacto
 
     def validate_contracts(host, dir)
       WebMock.allow_net_connect!
-      puts "Validating contracts in directory #{dir} against host #{host}\n\n"
+      puts "\nValidating contracts in directory #{dir} against host #{host}\n\n"
 
       total_failed = 0
       contracts = []
