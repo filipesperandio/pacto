@@ -27,12 +27,12 @@ module Pacto
 
     def to_s
       contract_name = @contract.nil? ? 'nil' : contract.name
-      """
+      ''"
       Validation:
       \tRequest: #{@request}
       \tContract: #{contract_name}
       \tResults: \n\t\t#{@results.join "\n\t\t"}
-      """
+      "''
     end
 
     def summary

@@ -7,7 +7,7 @@ rescue LoadError
   raise 'pacto/rspec requires rspec 2 or later'
 end
 
-RSpec::Matchers.define :have_unmatched_requests do |method, uri|
+RSpec::Matchers.define :have_unmatched_requests do |_method, _uri|
   @unmatched_validations = Pacto::ValidationRegistry.instance.unmatched_validations
   match do
     !@unmatched_validations.empty?
@@ -23,7 +23,7 @@ RSpec::Matchers.define :have_unmatched_requests do |method, uri|
   end
 end
 
-RSpec::Matchers.define :have_failed_validations do |method, uri|
+RSpec::Matchers.define :have_failed_validations do |_method, _uri|
   @failed_validations = Pacto::ValidationRegistry.instance.failed_validations
   match do
     !@failed_validations.empty?
@@ -52,7 +52,7 @@ RSpec::Matchers.define :have_validated do |method, uri|
     @request_pattern.with options
   end
 
-  def validated?(request_pattern)
+  def validated?(_request_pattern)
     @matching_validations = Pacto::ValidationRegistry.instance.validated? @request_pattern
     validated = !@matching_validations.nil?
     validated && successfully? && contract_matches?
@@ -93,7 +93,7 @@ RSpec::Matchers.define :have_validated do |method, uri|
       #   buffer.puts "    #{validation_result}"
       # end
     elsif @contract
-      validated_against = @matching_validations.map { |v| v.against_contract?  @contract }.compact.join ','
+      validated_against = @matching_validations.map { |v| v.against_contract? @contract }.compact.join ','
       buffer.puts "  against Contract #{@contract}"
       buffer.puts "    but it was validated against #{validated_against}"
     end

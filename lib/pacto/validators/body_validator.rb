@@ -5,7 +5,7 @@ module Pacto
         fail 'section name should be provided by subclass'
       end
 
-      def self.subschema(contract)
+      def self.subschema(_contract)
         fail 'override to return the proper subschema the contract'
       end
 

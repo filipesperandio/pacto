@@ -20,7 +20,7 @@ module Pacto
       begin
         contract_file = load_contract_file(pacto_request)
 
-        unless File.exists? contract_file
+        unless File.exist? contract_file
           uri = URI(pacto_request.uri)
           FileUtils.mkdir_p(File.dirname contract_file)
           File.write(contract_file, save(uri, pacto_request, pacto_response))
@@ -66,7 +66,7 @@ module Pacto
         :params => request.params,
         :path => request.path,
         :schema => generate_schema(source, request.body)
-      }.delete_if { |k, v| v.nil? }
+      }.delete_if { |_k, v| v.nil? }
     end
 
     def generate_response(request, response, source)
@@ -74,7 +74,7 @@ module Pacto
         :headers => @filters.filter_response_headers(request, response),
         :status => response.status,
         :schema => generate_schema(source, response.body)
-      }.delete_if { |k, v| v.nil? }
+      }.delete_if { |_k, v| v.nil? }
     end
 
     def generate_schema(source, body, generator_options = Pacto.configuration.generator_options)
