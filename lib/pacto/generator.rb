@@ -78,10 +78,9 @@ module Pacto
     end
 
     def generate_schema(source, body, generator_options = Pacto.configuration.generator_options)
-      if body && !body.empty?
-        body_schema = JSON::SchemaGenerator.generate source, body, generator_options
-        MultiJson.load(body_schema)
-      end
+      return unless body && !body.empty?
+      body_schema = JSON::SchemaGenerator.generate source, body, generator_options
+      MultiJson.load(body_schema)
     end
 
     def load_contract_file(pacto_request)

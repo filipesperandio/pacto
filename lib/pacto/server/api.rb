@@ -106,7 +106,7 @@ module Pacto
       end
 
       def normalize_headers(headers)
-        headers.reduce({}) do |res, elem|
+        headers.each_with_object({}) do |elem, res|
           key = elem.first.dup
           value = elem.last
           key.gsub!('_', '-')
